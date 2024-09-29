@@ -2,7 +2,6 @@
 
 @section('tittle', 'Login')
 
-
 @section('content')
     
     @if (session('success'))

@@ -64,7 +64,7 @@ class userController extends Controller
                 return redirect()->intended(route('dashboard'));
             }
 
-            return back()->withErrors(['credentials' => 'Las credenciales proporcionadas son incorrectas.'])->withInput();
+            return back()->withErrors(['credentials' => 'Las credenciales son incorrectas.'])->withInput();
 
         } catch (ValidationException $e) {
             $errorMessages = $e->validator->errors();
