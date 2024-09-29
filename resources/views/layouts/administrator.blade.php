@@ -42,6 +42,10 @@
               </li>
             </ul>
           </div>
+          <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="text-white">Cerrar Sesión</button>
+        </form>
         </div>
       </nav>
 

@@ -68,7 +68,6 @@ class userController extends Controller
 
         } catch (ValidationException $e) {
             $errorMessages = $e->validator->errors();
-
             $customErrorMessages = [];
 
             if ($errorMessages->has('email')) {
@@ -85,5 +84,6 @@ class userController extends Controller
             return back()->withErrors(['error' => 'Ocurrió un error inesperado.'])->withInput();
         }
     }
+
 }
 
