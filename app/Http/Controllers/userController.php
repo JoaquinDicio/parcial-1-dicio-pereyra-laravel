@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
 
 class userController extends Controller
 {
@@ -25,7 +26,8 @@ class userController extends Controller
             $user->role_id = 2;
             $user->save();
 
-            return redirect()->route('home');
+            return back()->with('success', 'Usuario registrado correctamente.');
+
         } catch (ValidationException $e) {
 
             $errorMessages = $e->validator->errors();
@@ -44,10 +46,43 @@ class userController extends Controller
                 $customErrorMessages['password'] = 'La contraseña es obligatoria y debe tener al menos 6 caracteres.';
             }
 
-            return response()->json(['error' => $customErrorMessages], 422);
+            return back()->withErrors($customErrorMessages)->withInput();
 
         } catch (QueryException $e) {
-            return response()->json(['error' => 'El correo electrónico ya está en uso.'], 409);
+            return back()->withErrors(['error' => 'Ocurrió un error inesperado.'])->withInput();
+        }
+    }
+    public function loginUser(Request $request)
+    {
+        try {
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required|string',
+            ]);
+
+            if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+                return redirect()->intended('home');
+            }
+
+            return back()->withErrors(['credentials' => 'Las credenciales proporcionadas son incorrectas.'])->withInput();
+
+        } catch (ValidationException $e) {
+            $errorMessages = $e->validator->errors();
+
+            $customErrorMessages = [];
+
+            if ($errorMessages->has('email')) {
+                $customErrorMessages['email'] = 'Por favor, ingresa un correo electrónico válido.';
+            }
+
+            if ($errorMessages->has('password')) {
+                $customErrorMessages['password'] = 'La contraseña es obligatoria.';
+            }
+
+            return back()->withErrors($customErrorMessages)->withInput();
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Ocurrió un error inesperado.'])->withInput();
         }
     }
 }
