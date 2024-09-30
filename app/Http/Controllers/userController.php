@@ -84,6 +84,5 @@ class userController extends Controller
             return back()->withErrors(['error' => 'Ocurrió un error inesperado.'])->withInput();
         }
     }
-
 }
 
