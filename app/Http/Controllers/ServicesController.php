@@ -7,8 +7,9 @@ use App\Models\Service;
 
 class ServicesController extends Controller
 {
-    public function postNewService(Request $request){
-        
+    public function postNewService(Request $request)
+    {
+
         //valida la entrada y manda mensajes personalizados de error
         $request->validate([
             'name' => 'required|string|max:255',
@@ -27,19 +28,20 @@ class ServicesController extends Controller
         $service->name = $request->input('name');
         $service->description = $request->input('description');
         $service->price = $request->input('price');
-        
+
         $service->save();
-        return redirect()->route('services')->with('success', 'Servicio agregado');
+        return redirect()->route(route: 'services')->with('success', 'Servicio agregado');
     }
 
-    public function deleteService($id){
-         $service = Service::find($id);
+    public function deleteService($id)
+    {
+        $service = Service::find($id);
 
-         if ($service) {
-             $service->delete();
-             return redirect()->route('services')->with('success', 'Servicio eliminado');
-         }
-         // por si no existe el service
-         return redirect()->route('services.index')->with('error', 'Servicio no encontrado.');
+        if ($service) {
+            $service->delete();
+            return redirect()->route('services')->with('success', 'Servicio eliminado');
+        }
+        // por si no existe el service
+        return redirect()->route('services.index')->with('error', 'Servicio no encontrado.');
     }
 }
