@@ -3,11 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\userController;
 
-
-Route::get('/', function () {
-    return view("register");
-})->name(name: 'register');
-
 Route::get('/register', function () {
     return view("register");
 })->name(name: 'register');

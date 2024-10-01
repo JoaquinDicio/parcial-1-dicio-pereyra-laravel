@@ -4,14 +4,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Suscription;
+use App\Models\Service;
 use Illuminate\Database\QueryException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
 
 class userController extends Controller
 {
-    public function getDashboard(){
-        return view('userDashboard');
+    public function getDashboard()
+    {
+        $services = Service::all();
+        $subscriptions = auth()->user() ? auth()->user()->subscriptions->pluck('service_id')->toArray() : [];
+
+        return view('users.home', compact('services', 'subscriptions'));
     }
 
     public function registerUser(Request $request)
@@ -89,6 +95,37 @@ class userController extends Controller
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Ocurrió un error inesperado.'])->withInput();
         }
+    }
+    public function addSuscription(Request $request)
+    {
+        $request->validate([
+            'service_id' => 'required|exists:services,id',
+        ]);
+
+        try {
+            $subscription = new Suscription();
+            $subscription->user_id = auth()->id();
+            $subscription->service_id = $request->input('service_id');
+            $subscription->contract_date = now();
+            $subscription->save();
+
+            return redirect()->route('dashboard')->with('success', 'Suscripción añadida correctamente');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error al agregar la suscripción: ' . $e->getMessage()])->withInput();
+        }
+    }
+    public function unsubscribe($service_id)
+    {
+        $subscription = Suscription::where('user_id', auth()->id())
+            ->where('service_id', $service_id)
+            ->first();
+
+        if ($subscription) {
+            $subscription->delete();
+            return redirect()->route('dashboard')->with('success', 'Te has desuscrito correctamente.');
+        }
+
+        return redirect()->route('dashboard')->withErrors(['error' => 'No estás suscrito a este servicio.']);
     }
 }
 
