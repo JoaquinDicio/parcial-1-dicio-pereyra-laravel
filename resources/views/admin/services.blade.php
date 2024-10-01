@@ -48,7 +48,7 @@
                             <td class="py-2 px-4 border-b text-center">{{ $service->created_at->format('d/m/Y H:i') }}</td>
                             <td class="py-2 px-4 border-b text-center">
                                 <div class="flex gap-2">
-                                    <a class="cursor-pointer text-sm bg-orange-500 hover:bg-orange-700 text-white p-2 rounded">Editar</a>
+                                    <a class="cursor-pointer text-sm bg-orange-500 hover:bg-orange-700 text-white p-2 rounded" href="/services/{{ $service->id }}/edit">Editar</a>
                                     <form action="{{ route('services.delete', $service->id) }}" method="POST" onsubmit="return confirm('¿En serio lo vas a borrar :( ?');">
                                         @csrf
                                         @method('DELETE') 
