@@ -3,7 +3,7 @@
 @section('title', 'Editar servicio')
 
 @section('content')
-<div class="container mx-auto mt-10 px-8">
+<div class="container mx-auto mt-10 px-40">
     <form action="/services/{{$service->id}}" method="POST">
         @csrf 
         @method('PUT') <!-- Usamos PUT porque es lo que va -->
@@ -32,8 +32,9 @@
             @endif
         </div>
 
-        <div class="flex items-center justify-between">
-            <input type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-medium text-sm py-2 px-3 rounded" value="Guardar"/>
+        <div class="flex items-center gap-2 justify-end w-100">
+            <input type="submit" class="transition ease-in-out bg-blue-500 hover:bg-blue-700 text-white font-medium text-sm py-2 px-3 rounded cursor-pointer" value="Guardar"/>
+            <a href="{{route('admin.services')}}" class="transition ease-in-out bg-red-500 hover:bg-red-700 text-white font-medium text-sm py-2 px-3 rounded">Cancelar</a>
         </div>
     </form>
 </div>
