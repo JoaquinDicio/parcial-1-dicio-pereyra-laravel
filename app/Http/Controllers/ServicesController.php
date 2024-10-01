@@ -46,12 +46,19 @@ class ServicesController extends Controller
     }
 
     public function editService(Request $request, $id){
+        //valida la entrada y manda mensajes personalizados de error
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
+            'price' => 'required|numeric|between:0.01,99999999.99',
+        ], [
+            'name.required' => 'El nombre es obligatorio.',
+            'name.max' => 'El nombre no puede tener mas de 255 caracteres.',
+            'price.required' => 'El precio es obligatorio.',
+            'price.numeric' => 'El precio debe ser un número.',
+            'price.between' => 'El precio debe estar entre 0 y 99999999',
         ]);
-
+        
         $service = Service::findOrFail($id);
         $service->name = $request->input('name');
         $service->description = $request->input('description');
