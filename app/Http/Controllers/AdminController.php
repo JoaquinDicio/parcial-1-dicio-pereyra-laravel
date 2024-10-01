@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Service;
+use App\Models\News;
 
 class AdminController extends Controller
 {
@@ -19,6 +20,15 @@ class AdminController extends Controller
         return view('admin.services', compact('services'));
     }
 
+    public function showNews(){
+        $news = News::all();
+        return view('admin.news', compact('news'));
+    }
+
+    public function addNewsForm(){
+        return view('admin.addNewsForm');
+    }
+
     public function addServiceForm(){
         return view('admin.addServiceForm');
     }
@@ -26,6 +36,11 @@ class AdminController extends Controller
     public function editServiceForm($id){
         $service = Service::findOrFail($id);
         return view('admin.editServiceForm', compact('service'));
+    }
+
+    public function editNewsForm($id){
+        $news = News::findOrFail($id);
+        return view('admin.editNewsForm', compact('news'));
     }
 
     public function logout()

@@ -7,11 +7,9 @@ Route::get('/dashboard', [AdminController::class, 'showDashboard'])
     ->middleware(['auth', 'role'])
     ->name('dashboard');
 
-
 Route::get('/services/{id}/edit', [AdminController::class, 'editServiceForm'])
     ->middleware(['auth', 'role'])
     ->name('services.edit');
-
 
 Route::get('/users', [AdminController::class, 'getUsers'])
     ->middleware(['auth', 'role'])
@@ -29,5 +27,17 @@ Route::get('/addServiceForm', [AdminController::class, 'addServiceForm'])
     ->middleware(['auth', 'role'])
     ->name('services.form');
 
+Route::get('/addNewsForm', [AdminController::class, 'addNewsForm'])
+    ->middleware(['auth', 'role'])
+    ->name('new.form');
+
+Route::get('/news', [AdminController::class, 'showNews'])
+    ->middleware(['auth', 'role'])
+    ->name('admin.news');
+
+Route::get('/news/{id}/edit', [AdminController::class, 'editNewsForm'])
+    ->middleware(['auth', 'role'])
+    ->name('admin.editNewsForm');
+    
 
 Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
