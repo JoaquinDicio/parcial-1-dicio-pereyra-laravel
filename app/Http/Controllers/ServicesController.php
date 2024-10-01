@@ -42,4 +42,20 @@ class ServicesController extends Controller
          // por si no existe el service
          return redirect()->route('services.index')->with('error', 'Servicio no encontrado.');
     }
+
+    public function editService(Request $request, $id){
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+        ]);
+
+        $service = Service::findOrFail($id);
+        $service->name = $request->input('name');
+        $service->description = $request->input('description');
+        $service->price = $request->input('price');
+        $service->save();
+
+        return redirect()->route('services')->with('success', 'Servicio actualizado con éxito.');
+    }
 }

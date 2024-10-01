@@ -10,5 +10,9 @@ Route::post('/services', [ServicesController::class, 'postNewService'])
     ->name('services');
 
 Route::delete('/services/{id}', [ServicesController::class, 'deleteService'])
-->middleware(['auth', 'role'])
-->name('services.delete');
+    ->middleware(['auth', 'role'])
+    ->name('services.delete');
+
+Route::put('/services/{id}', [ServicesController::class, 'editService'])
+    ->middleware(['auth', 'role'])
+    ->name('services.udpate');
