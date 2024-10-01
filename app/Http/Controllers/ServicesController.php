@@ -30,7 +30,7 @@ class ServicesController extends Controller
         $service->price = $request->input('price');
 
         $service->save();
-        return redirect()->route(route: 'services')->with('success', 'Servicio agregado');
+        return redirect()->route(route: 'admin.services')->with('success', 'Servicio agregado');
     }
 
     public function deleteService($id)
@@ -58,6 +58,6 @@ class ServicesController extends Controller
         $service->price = $request->input('price');
         $service->save();
 
-        return redirect()->route('services')->with('success', 'Servicio actualizado con éxito.');
+        return redirect()->route('admin.services')->with('success', 'Servicio actualizado con éxito.');
     }
 }

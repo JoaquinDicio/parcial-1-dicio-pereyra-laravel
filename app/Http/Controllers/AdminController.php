@@ -19,7 +19,7 @@ class AdminController extends Controller
         return view('admin.services', compact('services'));
     }
 
-    public function addServiceForm($id){
+    public function addServiceForm(){
         return view('admin.addServiceForm');
     }
 
