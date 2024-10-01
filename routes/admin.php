@@ -21,5 +21,9 @@ Route::get('/users/{id}', [AdminController::class, 'showUserInfo'])
     ->middleware('auth')
     ->name('services');
 
+Route::get('/addServiceForm', [AdminController::class, 'addServiceForm'])
+->middleware('auth')
+->name('services');
+
 
 Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
