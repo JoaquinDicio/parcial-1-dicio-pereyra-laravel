@@ -14,13 +14,13 @@ class ServicesController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'price' => 'required|numeric|min:1',
+            'price' => 'required|numeric|between:0.01,99999999.99',
         ], [
             'name.required' => 'El nombre es obligatorio.',
             'name.max' => 'El nombre no puede tener mas de 255 caracteres.',
             'price.required' => 'El precio es obligatorio.',
             'price.numeric' => 'El precio debe ser un número.',
-            'price.min' => 'El precio no puede ser menor que 1',
+            'price.between' => 'El precio debe estar entre 0 y 99999999',
         ]);
 
         //si todo lo anterior se valido correctamente pasamos aca
