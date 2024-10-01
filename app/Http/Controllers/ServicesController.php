@@ -8,8 +8,22 @@ use App\Models\Service;
 class ServicesController extends Controller
 {
     public function postNewService(Request $request){
-        $service = new Service();
+        
+        //valida la entrada y manda mensajes personalizados de error
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:1',
+        ], [
+            'name.required' => 'El nombre es obligatorio.',
+            'name.max' => 'El nombre no puede tener mas de 255 caracteres.',
+            'price.required' => 'El precio es obligatorio.',
+            'price.numeric' => 'El precio debe ser un número.',
+            'price.min' => 'El precio no puede ser menor que 1',
+        ]);
 
+        //si todo lo anterior se valido correctamente pasamos aca
+        $service = new Service();
         $service->name = $request->input('name');
         $service->description = $request->input('description');
         $service->price = $request->input('price');
