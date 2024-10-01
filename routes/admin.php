@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\userController;
-
 
 Route::get('/dashboard', [AdminController::class, 'showDashboard'])
     ->middleware(['auth', 'role'])
