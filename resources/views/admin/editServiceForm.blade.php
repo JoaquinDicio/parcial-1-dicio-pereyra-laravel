@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container mx-auto mt-10 px-40">
-    <form action="/services" method="POST">
+    <form action="/services/{{$service->id}}" method="POST">
         @csrf 
         @method('PUT') <!-- Usamos PUT porque es lo que va -->
 
