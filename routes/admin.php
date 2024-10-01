@@ -13,10 +13,6 @@ Route::get('/users', [AdminController::class, 'getUsers'])
     ->middleware('auth')
     ->name('users');
 
-Route::get('/addServiceForm',[AdminController::class, 'addServiceForm'])
-    ->middleware('auth')
-    ->name('users');
-
 Route::get('/users/{id}', [AdminController::class, 'showUserInfo'])
     ->middleware('auth')
     ->name('user.info');
