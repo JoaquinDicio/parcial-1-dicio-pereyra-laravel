@@ -58,7 +58,7 @@ class ServicesController extends Controller
             'price.numeric' => 'El precio debe ser un número.',
             'price.between' => 'El precio debe estar entre 0 y 99999999',
         ]);
-        
+
         $service = Service::findOrFail($id);
         $service->name = $request->input('name');
         $service->description = $request->input('description');
