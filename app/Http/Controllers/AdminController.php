@@ -19,8 +19,13 @@ class AdminController extends Controller
         return view('admin.services', compact('services'));
     }
 
-    public function addServiceForm(){
+    public function addServiceForm($id){
         return view('admin.addServiceForm');
+    }
+
+    public function editServiceForm($id){
+        $service = Service::findOrFail($id);
+        return view('admin.editServiceForm', compact('service'));
     }
 
     public function logout()
