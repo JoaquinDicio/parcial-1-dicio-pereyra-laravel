@@ -1,15 +1,8 @@
 @extends('layouts.generic')
 
-@section('tittle', 'register')
+@section('title', 'register')
 
 @section('content')
-    @if (session('success'))
-        <div class="fixed top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow-lg" role="alert">
-            <span class="block sm:inline">{{ session('success') }}</span>
-        </div>
-
-        <meta http-equiv="refresh" content="2;url={{ route('login') }}">
-    @endif
 
     <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">

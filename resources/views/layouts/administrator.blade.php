@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('tittle')</title>
+    <title>@yield('title')</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
@@ -20,7 +20,7 @@
               type="button"
               class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden"
             >
-              <span class="sr-only">Open main menu</span>
+              <span class="sr-only">Menu principal</span>
               <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   stroke-linecap="round"
@@ -39,6 +39,9 @@
               </li>
               <li>
                 <a href="{{route('users')}}" class="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Usuarios</a>
+              </li>
+              <li>
+                <a href="{{route('services')}}" class="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Servicios</a>
               </li>
             </ul>
           </div>

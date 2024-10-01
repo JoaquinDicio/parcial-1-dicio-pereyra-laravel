@@ -1,5 +1,5 @@
 <?php
 
-Route::get('/userHome', function () {
-    return "<h1>Home del usuario</h1>";
-})->name(name: 'userHome');
+use App\Http\Controllers\userController;
+
+Route::get('/userDashboard',[userController::class, 'getDashboard'] )->name(name: 'userDashboard');

@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 
 class userController extends Controller
 {
+    public function getDashboard(){
+        return view('userDashboard');
+    }
+
     public function registerUser(Request $request)
     {
         try {
@@ -26,7 +30,7 @@ class userController extends Controller
             $user->role_id = 2;
             $user->save();
 
-            return back()->with('success', 'Usuario registrado correctamente.');
+            return redirect()->route('login')->with('success', 'Registrado correctamente, inicia sesion');
 
         } catch (ValidationException $e) {
 
@@ -60,6 +64,8 @@ class userController extends Controller
                 'password' => 'required|string',
             ]);
 
+            // nota -> auth es un 'facade' que ya provee laravel :) 
+            // automaticamente si la autenticacion es exitosa guarda el user en una variable session '$user'
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                 return redirect()->intended(route('dashboard'));
             }

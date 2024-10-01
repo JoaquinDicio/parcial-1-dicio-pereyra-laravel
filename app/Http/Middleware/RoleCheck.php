@@ -23,7 +23,7 @@ class RoleCheck
         }
 
         if (Auth::check() && Auth::user()->role_id == 2) {
-            return redirect(route('userHome'))->with('success', 'Sesión iniciada con exito.');
+            return redirect(route('userDashboard'))->with('success', 'Sesion iniciada correctamente');
         }
     }
 }
