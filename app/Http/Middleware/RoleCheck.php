@@ -18,11 +18,11 @@ class RoleCheck
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role_id == 1) {
+        if (Auth::user()->role_id == 1) {
             return $next($request);
         }
 
-        if (Auth::check() && Auth::user()->role_id == 2) {
+        if (Auth::user()->role_id == 2) {
             return redirect(route('userDashboard'))->with('success', 'Sesion iniciada correctamente');
         }
     }

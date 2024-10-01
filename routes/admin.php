@@ -16,20 +16,20 @@ Route::get('/services/{id}/edit', [AdminController::class, 'editServiceForm'])
 
 
 Route::get('/users', [AdminController::class, 'getUsers'])
-    ->middleware('auth')
+    ->middleware(['auth', 'role'])
     ->name('users');
 
 Route::get('/users/{id}', [AdminController::class, 'showUserInfo'])
-    ->middleware('auth')
+    ->middleware(['auth', 'role'])
     ->name('user.info');
 
- Route::get('/services', [AdminController::class, 'showServices'])
-    ->middleware('auth')
+Route::get('/services', [AdminController::class, 'showServices'])
+    ->middleware(['auth', 'role'])
     ->name('admin.services');
 
 Route::get('/addServiceForm', [AdminController::class, 'addServiceForm'])
-->middleware('auth')
-->name('services.form');
+    ->middleware(['auth', 'role'])
+    ->name('services.form');
 
 
 Route::post('/logout', [AdminController::class, 'logout'])->name('logout');

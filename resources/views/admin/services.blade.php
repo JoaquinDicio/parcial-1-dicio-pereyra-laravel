@@ -43,7 +43,7 @@
                         <tr>
                             <td class="py-2 px-4 border-b text-center">{{ $service->id }}</td>
                             <td class="py-2 px-4 border-b text-center">{{ $service->name }}</td>
-                            <td class="py-2 px-4 border-b text-center">{{ $service->description }}</td>
+                            <td class="py-2 px-4 border-b text-start">{{substr($service->description, 0, 150 )}}...</td>
                             <td class="py-2 px-4 border-b text-center">${{ number_format($service->price, 2, ',', '.') }}</td>
                             <td class="py-2 px-4 border-b text-center">{{ $service->created_at->format('d/m/Y H:i') }}</td>
                             <td class="py-2 px-4 border-b text-center">
