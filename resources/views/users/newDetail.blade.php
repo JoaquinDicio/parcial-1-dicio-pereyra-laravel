@@ -17,7 +17,7 @@
             <div class="bg-white rounded-sm shadow mt-10 max-w-[1000px] p-10 mx-auto">
                 <h1 class="mb-5 font-bold text-2xl">{{$new->title}}</h1>
                 <p class="mb-6"><i>{{$new->summary}}</i></p>
-                <img class="w-full max-h-[300px] object-cover" src="{{$new->img}}" alt="{{$new->title}}">
+                <img class="w-full max-h-[600px] object-cover" src="{{'/' . $new->img}}" alt="{{$new->title}}">
                 <p class="mt-6">{{$new->content}}</p>
             </div>
         </section>

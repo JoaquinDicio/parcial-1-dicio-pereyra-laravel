@@ -28,8 +28,8 @@
 
             <nav class="flex gap-5 items-center">
                 @auth
+                <a class="text-lg font-bold" href="{{ route('users.dashboard') }}">{{ auth()->user()->name }}</a>
                     <a href="{{ route('user.news') }}" class="text-sm text-gray-500 hover:text-gray-700">Novedades</a>
-                    <a class="text-lg font-bold" href="{{ route('users.dashboard') }}">{{ auth()->user()->name }}</a>
                     <form action="{{ route('logout') }}" method="POST" class="inline">
                         @csrf
                         <button type="submit" class="text-sm text-gray-500 hover:text-gray-700">Cerrar Sesión</button>
@@ -48,7 +48,7 @@
         @yield('content')
     </main>
 
-    <footer class="h-25 bg-black text-white p-2">Todos los derechos reservados</footer>
+    <footer class="h-25 bg-black text-white p-2 text-center">Todos los derechos reservados</footer>
 
     <script src="{{ asset('js/app.js') }}"></script>
 </body>

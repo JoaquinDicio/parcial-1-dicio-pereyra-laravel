@@ -6,7 +6,7 @@
     <section class= "py-12">
         <!-- ERRORES Y SUCCESS -->
         @if(session('success'))
-            <div class="bg-green-500 text-white p-4 mb-4 rounded">
+            <div class="bg-green-500 text-white p-4 mb-4 rounded text-center">
                 {{ session('success') }}
             </div>
         @endif

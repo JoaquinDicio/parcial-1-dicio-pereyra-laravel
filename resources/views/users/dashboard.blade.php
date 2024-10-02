@@ -6,7 +6,7 @@
     <section class="pt-12 pb-6  bg-slate-100">
         <!-- ERRORES Y SUCCESS -->
         @if(session('success'))
-            <div class="bg-green-500 text-white p-4 mb-4 rounded">
+            <div class="bg-green-500 text-white p-4 mb-4 rounded text-center">
                 {{ session('success') }}
             </div>
         @endif
@@ -58,7 +58,7 @@
                     @endforeach
                 </div>
             @else
-                <p class="text-gray-600 text-lg">No te suscribiste a nada todavia.</p>
+                <p class="text-gray-600 text-lg">No hay ninguna suscripcion.</p>
             @endif
         </div>
     </section>
