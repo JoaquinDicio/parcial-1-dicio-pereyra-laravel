@@ -30,7 +30,7 @@
             @auth
             <div class="flex gap-5 items-center">
                 <div>
-                    <p class="text-lg font-bold">{{ auth()->user()->name}}</p>
+                    <a class="text-lg font-bold" href="{{route('users.dashboard')}}" >{{ auth()->user()->name}}</a>
                 </div>
                 <div>
                     <form action="{{ route('logout') }}" method="POST">
