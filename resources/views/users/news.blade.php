@@ -14,7 +14,7 @@
                 @foreach($news as $new)
                     <li class="p-4 border hover:transform hover:scale-[105%] duration-300 bg-white cursor-pointer rounded-lg shadow-md">
                         <a href="{{ route('news.detail', $new->id) }}" class="block">
-                            <img class="rounded-sm h-[200px] w-full object-cover" src="{{$new->img}}" alt="{{$new->title}}">
+                            <img class="rounded-sm h-[200px] w-full object-cover" src="{{'/' .  $new->img }}" alt="{{$new->title}}">
                             <div class="mt-4">
                                 <h2 class="text-xl font-semibold">{{ $new->title }}</h2>
                                 <p class="text-gray-700">{{ $new->summary }}</p>

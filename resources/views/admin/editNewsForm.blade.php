@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container mx-auto mt-10 px-8">
-    <form action="/news/{{$news->id}}" method="POST">
+    <form action="/news/{{$news->id}}" method="POST" enctype="multipart/form-data">
         @csrf 
         @method('PUT') <!-- Usamos PUT porque es lo que va -->
 
@@ -25,8 +25,13 @@
         </div>
 
         <div class="mb-4">
-            <label for="img" class="block text-gray-700 text-sm font-bold mb-2">Imagen URL:</label>
-            <input value="{{ $news->img }}" type="text" id="img" name="img" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ingrese la URL de la imagen">
+            <label for="img" class="block text-gray-700 text-sm font-bold mb-2">Imagen:</label>
+            @if ($news->img)
+                <div class="mt-2">
+                    <img src="{{ asset($news->img) }}" alt="Imagen de la noticia" class="mt-2 w-32 h-auto border rounded">
+                </div>
+            @endif
+            <input type="file" id="img" name="img" class="py-2 my-2" placeholder="Seleccione una nueva imagen">
             @if ($errors->has('img'))
                 <span class="text-red-500 text-xs italic">{{ $errors->first('img') }}</span>
             @endif

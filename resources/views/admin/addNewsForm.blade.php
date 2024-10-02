@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container mx-auto mt-10 px-40">
-    <form action="/news" method="POST">
+    <form action="/news" method="POST" enctype="multipart/form-data">
         @csrf 
 
         <div class="mb-4">
@@ -25,7 +25,7 @@
 
         <div class="mb-4">
             <label for="img" class="block text-gray-700 text-sm font-bold mb-2">Imagen:</label>
-            <input type="text" id="img" name="img" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ingrese la URL de la imagen" value="{{ old('img') }}">
+            <input type="file" id="img" name="img" required value="{{ old('img') }}">
             @if ($errors->has('img'))
                 <span class="text-red-500 text-xs italic">{{ $errors->first('img') }}</span>
             @endif

@@ -43,7 +43,7 @@
                             <td class="py-2 px-4 border-b text-center">{{ $article->id }}</td>
                             <td class="py-2 px-4 border-b text-center">{{ $article->title }}</td>
                             <td class="py-2 px-4 border-b text-start">{{ substr($article->summary, 0, 150) }}...</td>
-                            <td class="py-2 px-4 border-b text-start"><img class="w-25 max-w-[100px]" src="{{ $article->img }}" alt="{{ $article->title }}"></td>
+                            <td class="py-2 px-4 border-b text-start"><img class="w-25 max-w-[100px]" src="{{'/' .  $article->img }}" alt="{{ $article->title }}"></td>
                             <td class="py-2 px-4 border-b text-center">{{ $article->created_at->format('d/m/Y H:i') }}</td>
                             <td class="py-2 px-4 border-b text-center">
                                 <div class="flex gap-2">
