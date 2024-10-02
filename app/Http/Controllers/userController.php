@@ -12,13 +12,23 @@ use Illuminate\Support\Facades\Auth;
 
 class userController extends Controller
 {
-    public function getDashboard()
+    public function getHome()
     {
         $services = Service::all();
         $subscriptions = auth()->user() ? auth()->user()->subscriptions->pluck('service_id')->toArray() : [];
 
         return view('users.home', compact('services', 'subscriptions'));
     }
+
+    public function getDashboard()
+    {
+        $subscriptions = Suscription::where('user_id', auth()->id())
+        ->with('service') // esto es posible pq hay un belongsTo en el Models/Suscription 
+        ->get();
+
+        return view('users.dashboard', compact('subscriptions'));
+    }
+    
 
     public function registerUser(Request $request)
     {

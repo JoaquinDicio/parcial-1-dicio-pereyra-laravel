@@ -3,13 +3,12 @@
 use App\Http\Controllers\userController;
 
 
-Route::get('/', [userController::class, 'getDashboard'])
-    ->name(name: 'userDashboard');
+Route::get('/', [userController::class, 'getHome'])
+    ->name(name: 'users.home');
 
-Route::post('/addSuscription', [userController::class, 'addSuscription'])
-    ->middleware('auth')
-    ->name('suscriptions');
+    
+Route::get('/user-dashboard', [userController::class, 'getDashboard'])
+    ->middleware('auth')    
+    ->name(name: 'users.dashboard');
 
-Route::delete('/suscriptions/{service_id}', [UserController::class, 'unsubscribe'])
-    ->middleware('auth')
-    ->name('unsubscribe');
+

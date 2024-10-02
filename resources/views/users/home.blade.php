@@ -4,6 +4,19 @@
 
 @section('content')
     <section class= "py-12">
+        <!-- ERRORES Y SUCCESS -->
+        @if(session('success'))
+            <div class="bg-green-500 text-white p-4 mb-4 rounded">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="bg-red-500 text-white p-4 mb-4 rounded">
+                {{ session('error') }}
+            </div>
+        @endif
+        <!-- FIN: ERRORES Y SUCCESS -->
         <div class="container mx-auto flex flex-col lg:flex-row items-center">
             <div class="lg:w-1/2 p-6">
                 <h1 class="text-4xl font-bold text-gray-800 mb-4">Bienvenido a Host Engine</h1>
