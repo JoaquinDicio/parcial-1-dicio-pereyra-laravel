@@ -41,33 +41,36 @@
 
     </section>
 
-    <section class="py-12">
+    <section class="bg-slate-100 py-12">
         <div class="container mx-auto text-center">
-            <h2 class="text-3xl font-bold text-gray-800 mb-8">Elegí el plan perfecto para vos</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <h2 class="text-3xl font-bold text-gray-800 mt-5 mb-12">Elegí el plan perfecto para vos</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto max-w-[1100px]">
                 @foreach($services as $service)
-                <div class="bg-white rounded-xl p-6 border border-blue-600">
-                    <h3 class="text-xl font-bold text-gray-700 mb-2">{{ $service->name }}</h3>
-                    <p class="text-gray-600 mb-4 min-h-72 text-start">{{ $service->description }}</p>
-    
-                    <div class="mb-4">
-                        <span class="text-3xl font-bold text-gray-800">AR$ {{ number_format($service->price, 0, ',', '.') }}</span>
-                        <span class="text-sm text-gray-600">/mes</span>
-                    </div>
-    
+                <div class="bg-white rounded-xl p-6 shadow flex flex-col">
+                   <div class="p-5">
+                       <h3 class="text-xl font-bold text-gray-700 mb-3">{{ $service->name }}</h3>
+                       <div class="mb-4">
+                           <span class="text-3xl font-bold text-gray-800">AR$ {{ number_format($service->price, 0, ',', '.') }}</span>
+                           <span class="text-sm text-gray-600">/mes</span>
+                       </div>
+                   </div>
                     @if(in_array($service->id, $subscriptions))
-                        <form action="{{ route('unsubscribe', $service->id) }}" method="POST" class="w-100">
+                        <form class="mb-5" action="{{ route('unsubscribe', $service->id) }}" method="POST" class="w-100">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="text-red-600 rounded-lg py-4 border font-semibold font-xl border-red-600 px-4 hover:text-white hover:bg-red-600 w-full transition ease-in-out duration-200">Desuscribirse</button>
+                            <button type="submit" class="text-white rounded-lg py-4 border font-semibold font-xl bg-red-600 px-4 hover:bg-red-700  w-full transition ease-in-out duration-200">Desuscribirse</button>
                         </form>
                     @else
-                        <form action="{{ route('suscriptions') }}" method="POST" class="w-100">
+                        <form class="mb-5" action="{{ route('suscriptions') }}" method="POST" class="w-100">
                             @csrf
                             <input type="hidden" name="service_id" value="{{ $service->id }}">
-                            <button type="submit" class="text-blue-600 rounded-lg py-4 border font-semibold font-xl border-blue-600 px-4 hover:text-white hover:bg-blue-600 w-full transition ease-in-out duration-200">Elegir plan</button>
+                            <button type="submit" class="bg-blue-600 text-white rounded-lg py-4 font-semibold font-xl px-4  hover:bg-blue-700  w-full transition ease-in-out duration-200">Elegir plan</button>
                         </form>
                     @endif
+                    <div>
+                        <h4 class="text-sm font-medium text-start mb-2">Detalle</h4>
+                        <p class="text-gray-600 mb-4 text-start">{{ $service->description }}</p>
+                    </div>
                 </div>
                 @endforeach
             </div>
