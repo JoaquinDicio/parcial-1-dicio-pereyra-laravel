@@ -71,4 +71,14 @@ class NewsController extends Controller
 
         return redirect()->route('admin.news')->with('success', 'Artículo actualizado con éxito.');
     }
+
+    public function getNewsList(){
+        $news = News::all();
+        return view('users.news',compact('news'));
+    }
+
+    public function getNewDetail($id){
+        $new = News::find($id);
+        return view('users.newDetail',compact('new'));
+    }
 }
