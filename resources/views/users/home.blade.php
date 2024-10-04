@@ -55,13 +55,13 @@
                        </div>
                    </div>
                     @if(in_array($service->id, $subscriptions))
-                        <form class="mb-5" action="{{ route('unsubscribe', $service->id) }}" method="POST" class="w-100">
+                        <form class="mb-5" action="{{ route('unsubscribe', $service->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-white rounded-lg py-4 border font-semibold font-xl bg-red-600 px-4 hover:bg-red-700  w-full transition ease-in-out duration-200">Desuscribirse</button>
                         </form>
                     @else
-                        <form class="mb-5" action="{{ route('suscriptions') }}" method="POST" class="w-100">
+                        <form class="mb-5" action="{{ route('suscriptions') }}" method="POST">
                             @csrf
                             <input type="hidden" name="service_id" value="{{ $service->id }}">
                             <button type="submit" class="bg-blue-600 text-white rounded-lg py-4 font-semibold font-xl px-4  hover:bg-blue-700  w-full transition ease-in-out duration-200">Elegir plan</button>
