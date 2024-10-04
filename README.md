@@ -72,4 +72,4 @@ Para configurar este proyecto en tu entorno local, sigue estos pasos:
 
 ## Licencia
 
-Este proyecto está licenciado bajo la [Licencia MIT](LICENSE).
+Este proyecto está licenciado bajo la [Licencia MIT](LICENSE)...
