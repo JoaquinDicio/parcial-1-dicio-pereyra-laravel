@@ -68,8 +68,6 @@ Para configurar este proyecto en tu entorno local, sigue estos pasos:
    php artisan serve
    ```
 
-7. Accede a la aplicación en tu navegador en `http://localhost:8000`. 
-
 ## Licencia
 
 Este proyecto está licenciado bajo la [Licencia MIT](LICENSE).
