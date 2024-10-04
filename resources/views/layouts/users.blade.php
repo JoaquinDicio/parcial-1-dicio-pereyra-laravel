@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <header class="bg-white border border-gray-200 shadow fixed w-full">
+    <header class="bg-white border border-gray-200 shadow fixed z-50 w-full">
         <div class="container mx-auto flex flex-wrap justify-between items-center px-2 sm:px-4 py-2.5">
             <a href="{{ route('users.home') }}" class="flex items-center">
                 <h1 class="self-center text-xl font-semibold whitespace-nowrap text-dark">Host Engine</h1>

@@ -18,11 +18,6 @@ return new class extends Migration {
             $table->decimal("price", 10, 2); // para que tenga comas asi mas como moneda
             $table->timestamps();
         });
-
-        DB::table('services')->insert([
-            ['name' => 'Host re piola', 'description' => 'Descripcion de Host re piola', 'price' => '30000', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Host re malo', 'description' => 'Descripcion de Host re malo pero re mal, una cagada', 'price' => '10000', 'created_at' => now(), 'updated_at' => now()],
-        ]);
     }
 
     /**

@@ -23,24 +23,24 @@ class NewsController extends Controller
             'img.max' => 'La imagen no puede exceder los 2 MB.',
             'summary.max' => 'El resumen no puede tener más de 500 caracteres.',
         ]);
-    
+
         $news = new News();
         $news->title = $request->input('title');
         $news->content = $request->input('content');
         $news->summary = $request->input('summary');
         $news->user_id = Auth::id();
-    
+
         // cosas de la fotito
         if ($request->hasFile('img')) {
             $imagePath = $request->file('img')->move(public_path('uploads'), $request->file('img')->getClientOriginalName());
             $news->img = 'uploads/' . $request->file('img')->getClientOriginalName(); // guarda la ruta en la bbdd sql
         }
-    
+
         $news->save();
-    
+
         return redirect()->route('admin.news')->with('success', 'Noticia agregada con éxito.');
     }
-    
+
 
     public function deleteArticle($id)
     {
@@ -79,11 +79,11 @@ class NewsController extends Controller
             if ($news->img) {
                 $oldImagePath = public_path($news->img);
                 if (file_exists($oldImagePath)) {
-                    unlink($oldImagePath); 
+                    unlink($oldImagePath);
                 }
             }
             $imagePath = $request->file('img')->move(public_path('uploads'), $request->file('img')->getClientOriginalName());
-            $news->img = 'uploads/' . $request->file('img')->getClientOriginalName(); 
+            $news->img = 'uploads/' . $request->file('img')->getClientOriginalName();
         }
 
         $news->save();
@@ -91,13 +91,15 @@ class NewsController extends Controller
         return redirect()->route('admin.news')->with('success', 'Artículo actualizado con éxito.');
     }
 
-    public function getNewsList(){
+    public function getNewsList()
+    {
         $news = News::all();
-        return view('users.news',compact('news'));
+        return view('users.news', compact('news'));
     }
 
-    public function getNewDetail($id){
+    public function getNewDetail($id)
+    {
         $new = News::find($id);
-        return view('users.newDetail',compact('new'));
+        return view('users.newDetail', compact('new'));
     }
 }

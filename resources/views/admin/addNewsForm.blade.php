@@ -25,7 +25,7 @@
 
         <div class="mb-4">
             <label for="img" class="block text-gray-700 text-sm font-bold mb-2">Imagen:</label>
-            <input type="file" id="img" name="img" required value="{{ old('img') }}">
+            <input type="file" id="img" name="img" required>
             @if ($errors->has('img'))
                 <span class="text-red-500 text-xs italic">{{ $errors->first('img') }}</span>
             @endif
@@ -41,7 +41,7 @@
 
         <div class="flex items-center justify-end w-100 gap-2">
             <a href="{{ route('admin.news') }}" class="transition ease-in-out bg-red-500 hover:bg-red-700 text-white font-medium text-sm py-2 px-3 rounded">Cancelar</a>
-            <input type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-medium text-sm py-2 px-3 rounded cursor-pointer" value="Guardar"/>
+            <input type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-medium text-sm py-2 px-3 rounded cursor-pointer" value="Guardar">
         </div>
     </form>
 </div>

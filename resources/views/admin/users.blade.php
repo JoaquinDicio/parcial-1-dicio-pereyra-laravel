@@ -1,5 +1,7 @@
 @extends('layouts.administrator')
 
+@section('title', 'Usuarios')
+
 @section('content')
     <div class="container mx-auto mt-10">
         <h1 class="text-3xl font-bold mb-6 text-center">Lista de Usuarios</h1>

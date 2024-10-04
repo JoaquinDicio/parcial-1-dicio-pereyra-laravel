@@ -48,7 +48,7 @@
                             <td class="py-2 px-4 border-b text-center">
                                 <div class="flex gap-2">
                                     <a class="cursor-pointer text-sm bg-orange-500 hover:bg-orange-700 text-white p-2 rounded" href="/news/{{ $article->id }}/edit">Editar</a>
-                                    <form action="{{ route('news.delete', $article->id) }}" method="POST" onsubmit="return confirm('¿En serio lo vas a borrar?');">
+                                    <form action="{{ route('news.delete', $article->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de borrar esta Noticia?');">
                                         @csrf
                                         @method('DELETE') 
                                         <button type="submit" class="cursor-pointer bg-red-500 hover:bg-red-700 text-white p-2 rounded focus:outline-none focus:shadow-outline text-sm">

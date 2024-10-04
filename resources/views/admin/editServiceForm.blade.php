@@ -34,7 +34,7 @@
 
         <div class="flex items-center gap-2 justify-end w-100">
             <a href="{{route('admin.services')}}" class="transition ease-in-out bg-red-500 hover:bg-red-700 text-white font-medium text-sm py-2 px-3 rounded">Cancelar</a>
-            <input type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-medium text-sm py-2 px-3 rounded" value="Guardar"/>            
+            <input type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-medium text-sm py-2 px-3 rounded cursor-pointer" value="Guardar"/>            
         </div>
     </form>
 </div>

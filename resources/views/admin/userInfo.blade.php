@@ -1,5 +1,7 @@
 @extends('layouts.administrator')
 
+@section('title', 'Detalle del usuario')
+
 @section('content')
     <div class="container mx-auto mt-10">
         <h1 class="text-3xl font-bold mb-6">Detalles del Usuario: {{ $user->name }}</h1>
