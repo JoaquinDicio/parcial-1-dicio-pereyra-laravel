@@ -34,7 +34,7 @@ Los usuarios y las noticias se generan mediante seeders, lo que permite poblar l
 
 El sistema de registro permite a los nuevos usuarios crear una cuenta, utilizando las validaciones pertinentes para garantizar que la información proporcionada sea correcta y que no existan cuentas duplicadas.
 
-##B BASE DE DATOS
+## BASE DE DATOS
 
 Se debe contar con la base de datos creada llamada "hostengine" para que las tablas de las migraciones puedan ser creadas correctamente.
 
