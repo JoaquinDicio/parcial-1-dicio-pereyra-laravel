@@ -15,6 +15,10 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
+    public function addUserForm(){
+        return view('admin.addUserForm');
+    }
+
     public function showServices(){
         $services = Service::all();
         return view('admin.services', compact('services'));

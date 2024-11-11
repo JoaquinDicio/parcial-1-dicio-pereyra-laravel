@@ -19,7 +19,6 @@ class userController extends Controller
 
         return view('users.home', compact('services', 'subscriptions'));
     }
-
     public function getDashboard()
     {
         $subscriptions = Suscription::where('user_id', auth()->id())
@@ -28,8 +27,6 @@ class userController extends Controller
 
         return view('users.dashboard', compact('subscriptions'));
     }
-    
-
     public function registerUser(Request $request)
     {
         try {
@@ -37,16 +34,17 @@ class userController extends Controller
                 'email' => 'required|email|unique:users',
                 'name' => 'required|string',
                 'password' => 'required|string|min:6',
+                'role_id' => 'nullable'
             ]);
 
             $user = new User();
             $user->name = $request->input('name');
             $user->email = $request->input('email');
             $user->password = Hash::make($request->input('password'));
-            $user->role_id = 2;
+            $user->role_id = $request->input('role_id', 2); // el role_id de la request o valor predeterminado '2' : user
             $user->save();
 
-            return redirect()->route('login')->with('success', 'Registrado correctamente, inicia sesion');
+            return redirect()->route('login')->with('success', 'Usuario creado correctamente, inicia sesion');
 
         } catch (ValidationException $e) {
 
@@ -136,6 +134,17 @@ class userController extends Controller
         }
 
         return redirect()->route('dashboard')->withErrors(['error' => 'No estás suscrito a este servicio.']);
+    }
+    public function deleteUser($user_id)
+    {
+        $user = User::find($user_id);
+
+        if ($user) {
+            $user->delete();
+            return redirect()->route('users')->with('success', 'Usuario eliminado con éxito.');
+        }
+
+        return redirect()->route('users')->with('error', 'Usuario no encontrado.');
     }
 }
 

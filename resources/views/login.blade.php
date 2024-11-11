@@ -5,7 +5,7 @@
 @section('content')
     
     @if (session('success'))
-        <div class="fixed top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow-lg" role="alert">
+        <div class="fixed top-18 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow-lg" role="alert">
             <span class="block sm:inline">{{ session('success') }}</span>
         </div>
     @endif
