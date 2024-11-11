@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\CartItem;
 
 class CartController extends Controller
 {
@@ -15,11 +15,24 @@ class CartController extends Controller
         // con la tabla 'services' 
         $cartItems = $cart->cartItems()->with('service')->get();
 
-        $total = $cartItems->sum(function ($item) {
-            return $item->service->price; // suma para el total del carrito
-        });
-        
-        return view('users.cart', compact('cart', 'cartItems', 'total'));
+        $groupedItems = [];
+        foreach ($cartItems as $item) {
+            $serviceId = $item->service_id;
+            if (!isset($groupedItems[$serviceId])) {
+                $groupedItems[$serviceId] = [
+                    'service' => $item->service,
+                    'quantity' => 0,
+                    'total_price' => 0,
+                    'item_id' => $item->id
+                ];
+            }
+            $groupedItems[$serviceId]['quantity'] += 1;
+            $groupedItems[$serviceId]['total_price'] += $item->service->price;
+        }
+
+        $total = array_sum(array_column($groupedItems, 'total_price'));
+
+        return view('users.cart', compact('groupedItems', 'total'));
     }
 
     public function addToCart(Request $request)
@@ -33,8 +46,14 @@ class CartController extends Controller
         return back()->with('success', 'Servicio agregado al carrito correctamente.');
     }
 
-    public function deleteFromCart(){
-        // TODO..
+    public function deleteFromCart($cart_item_id)
+    {
+        $item = CartItem::find($cart_item_id);
+
+        if($item){
+            $item->delete();
+            return back()->with('success','Servicio eliminado del carrito');
+        };
     }
 
     public function checkout(){

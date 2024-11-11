@@ -11,7 +11,7 @@ Route::post('/cart', [CartController::class,'addToCart'])
     ->middleware('auth')
     ->name('cart.add');
 
-Route::delete('/cart', [CartController::class,'deleteFromCart'])
+Route::delete('/cart/${id}', [CartController::class,'deleteFromCart'])
     ->middleware('auth')
     ->name('cart.remove');
 
