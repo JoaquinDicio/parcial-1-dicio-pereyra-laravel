@@ -31,6 +31,7 @@ class CartController extends Controller
         }
 
         $total = array_sum(array_column($groupedItems, 'total_price'));
+        session(['cart_total'=>$total]); //lo guardo global para poder usarlo en el checkout
 
         return view('users.cart', compact('groupedItems', 'total'));
     }
@@ -56,8 +57,37 @@ class CartController extends Controller
         };
     }
 
-    public function checkout(){
-        // TODO..
+    public function showCheckout(){
+        return view('users.checkout');
+    }
+
+    public function checkout(Request $request){
+
+        $messages = [
+            'card_number.required' => 'El numero de la tarjeta es obligatorio.',
+            'card_number.numeric' => 'Este numero es invalido',
+            'card_number.digits' => 'El numero de tarjeta debe tener 16 digitos.',
+            'expiry_date.required' => 'La fecha de vencimiento es obligatoria.',
+            'expiry_date.date_format' => 'El formato de la fecha debe ser MM/AA.',
+            'cvv.required' => 'El CVV es obligatorio.',
+            'cvv.numeric' => 'El CVV debe ser un numero.',
+            'cvv.digits' => 'El CVV debe tener 3 digitos.',
+        ];
+    
+        $request->validate([
+            'card_number' => 'required|numeric|digits:16',
+            'expiry_date' => ['required', 'date_format:m/y', function ($attribute, $value, $fail) {
+                // esta funcion es para ver que no haya expirado la tarjeta
+                $currentDate = new \DateTime();
+                $expiryDate = \DateTime::createFromFormat('m/y', $value);
+                if ($expiryDate < $currentDate) {
+                    $fail('Tu tarjeta esta vencida');
+                }
+            }],
+            'cvv' => 'required|numeric|digits:3',
+        ], $messages);
+
+        //continua despues de las validaciones
     }
 
 }

@@ -17,4 +17,8 @@ Route::delete('/cart/${id}', [CartController::class,'deleteFromCart'])
 
 Route::post('/cart/checkout', [CartController::class,'checkout'])
     ->middleware('auth')
+    ->name('cart.payment');
+
+Route::get('/cart/checkout', [CartController::class,'showCheckout'])
+    ->middleware('auth')
     ->name('cart.checkout');
