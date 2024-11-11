@@ -10,4 +10,5 @@ require base_path(path: 'routes/user.php');
 require base_path(path: 'routes/services.php');
 require base_path(path: 'routes/news.php');
 require base_path(path: 'routes/suscriptions.php');
+require base_path(path: 'routes/cart.php');
 

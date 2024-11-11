@@ -14,4 +14,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Suscription::class);
     }
+
+    //esto sirve para poder obtener el carrito 'completed:false' del usuario
+    public function cart()
+    {
+        return $this->hasOne(Cart::class)->where('completed', false);
+    }
 }

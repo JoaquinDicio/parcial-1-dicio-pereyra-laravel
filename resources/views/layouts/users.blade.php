@@ -1,3 +1,10 @@
+@php
+    $cartCount = 0;
+    if (auth()->user() && auth()->user()->cart) {
+        $cartCount = auth()->user()->cart->cartItems()->count();
+    }
+@endphp
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -29,11 +36,12 @@
             <nav class="flex gap-5 items-center">
                 @auth
                 <a class="text-lg font-bold" href="{{ route('users.dashboard') }}">{{ auth()->user()->name }}</a>
-                    <a href="{{ route('user.news') }}" class="text-sm text-gray-500 hover:text-gray-700">Novedades</a>
-                    <form action="{{ route('logout') }}" method="POST" class="inline">
-                        @csrf
-                        <button type="submit" class="text-sm text-gray-500 hover:text-gray-700">Cerrar Sesión</button>
-                    </form>
+                <a href="{{ route('user.news') }}" class="text-sm text-gray-500 hover:text-gray-700">Novedades</a>
+                <a href="{{ route('cart') }}" class="text-sm text-gray-500 hover:text-gray-700">Carrito ({{$cartCount}})</a>
+                <form action="{{ route('logout') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit" class="text-sm text-gray-500 hover:text-gray-700">Cerrar Sesión</button>
+                </form>
                 @endauth
 
                 @guest
