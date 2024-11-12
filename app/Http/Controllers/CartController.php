@@ -92,11 +92,18 @@ class CartController extends Controller
         $cartId = auth()->user()->cart->id;
         $cartItems = CartItem::where('cart_id', $cartId)->get();
 
-        //suscripcion para cada item del cart
+        //suscripcion y pago para cada item del cart
         foreach ($cartItems as $item){
-            $user->subscriptions()->create([
+            
+            $subscription = $user->subscriptions()->create([
                 'service_id' => $item->service_id,
                 'contract_date' => now(),
+            ]);
+
+            $subscription->payments()->create([
+                'amount' => session('cart_total'),
+                'card_last_four' => substr($request->card_number, -4), 
+                'payment_date' => now(),
             ]);
         }
 

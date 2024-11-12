@@ -8,8 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Suscription extends Model
 {
     use HasFactory;
-
-    protected $fillable = ['service_id','contract_date'];
+    
+    protected $fillable = [
+        'service_id',
+        'contract_date',
+        'user_id',
+    ];
 
     public function user()
     {
@@ -18,5 +22,9 @@ class Suscription extends Model
     public function service()
     {
         return $this->belongsTo(Service::class);
+    }
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 }

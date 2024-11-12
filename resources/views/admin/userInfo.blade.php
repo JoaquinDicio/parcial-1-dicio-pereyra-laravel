@@ -17,6 +17,8 @@
                         <th class="py-2 px-4 border-b text-center">ID</th>
                         <th class="py-2 px-4 border-b text-center">Servicio</th>
                         <th class="py-2 px-4 border-b text-center">Fecha de Contrato</th>
+                        <th class="py-2 px-4 border-b text-center">Tarjeta</th>
+                        <th class="py-2 px-4 border-b text-center">Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,6 +27,14 @@
                             <td class="py-2 px-4 border-b text-center">{{ $subscription->id }}</td>
                             <td class="py-2 px-4 border-b text-center">{{ $subscription->service->name }}</td>
                             <td class="py-2 px-4 border-b text-center">{{ $subscription->contract_date }}</td>
+
+                            @if($subscription->payments->isNotEmpty())
+                                <td class="py-2 px-4 border-b text-center text-sm">**** **** **** {{ $subscription->payments->first()->card_last_four }}</td>
+                                <td class="py-2 px-4 border-b text-center">${{ $subscription->payments->sum('amount') }}</td>
+                            @else
+                                <td class="py-2 px-4 border-b text-center">No pagado</td>
+                                <td class="py-2 px-4 border-b text-center">N/A</td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

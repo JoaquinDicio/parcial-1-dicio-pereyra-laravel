@@ -62,9 +62,8 @@ class AdminController extends Controller
 
     public function showUserInfo($id)
     {
-        $user = User::findOrFail($id); //hace lo que dice el nombre, o encuentra o falla xd
-        $subscriptions = $user->subscriptions()->with('service')->get();
-
+        $user = User::findOrFail($id);
+        $subscriptions = $user->subscriptions()->with('service', 'payments')->get();    
         return view('admin.userInfo', compact('user', 'subscriptions'));
     }
 }
