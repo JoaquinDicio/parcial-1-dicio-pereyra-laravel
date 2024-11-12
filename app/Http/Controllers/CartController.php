@@ -77,7 +77,7 @@ class CartController extends Controller
         $request->validate([
             'card_number' => 'required|numeric|digits:16',
             'expiry_date' => ['required', 'date_format:m/y', function ($attribute, $value, $fail) {
-                // esta funcion es para ver que no haya expirado la tarjeta
+                // esta funcion es para ver que no haya expirado la tarjetita
                 $currentDate = new \DateTime();
                 $expiryDate = \DateTime::createFromFormat('m/y', $value);
                 if ($expiryDate < $currentDate) {
@@ -86,8 +86,23 @@ class CartController extends Controller
             }],
             'cvv' => 'required|numeric|digits:3',
         ], $messages);
+        
+        //consulta para obtener los items del cart
+        $user = auth()->user();
+        $cartId = auth()->user()->cart->id;
+        $cartItems = CartItem::where('cart_id', $cartId)->get();
 
-        //continua despues de las validaciones
+        //suscripcion para cada item del cart
+        foreach ($cartItems as $item){
+            $user->subscriptions()->create([
+                'service_id' => $item->service_id,
+                'contract_date' => now(),
+            ]);
+        }
+
+        $user->cart->cartItems()->delete();
+
+        return redirect()->route('users.dashboard')->with('success','Tu pago fue exitoso, ya estas suscrito');
     }
 
 }
