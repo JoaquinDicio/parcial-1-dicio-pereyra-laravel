@@ -14,7 +14,7 @@ class ServicesTableSeeder extends Seeder
 
         DB::table('services')->insert([
             [
-                'name' => 'Host re piola',
+                'name' => 'Host avanzado',
                 'description' => 'Perfecto para negocios grandes, con almacenamiento en la nube y soporte 24/7',
                 'price' => 30000.00,
                 'created_at' => now(),
@@ -28,7 +28,7 @@ class ServicesTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Host re malo',
+                'name' => 'Host básico',
                 'description' => 'Sirve para experimentar lo que es tener presencia en linea',
                 'price' => 10000.00,
                 'created_at' => now(),
