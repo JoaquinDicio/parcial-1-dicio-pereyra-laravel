@@ -2,18 +2,34 @@
 
 
 namespace App\Http\Controllers;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Service;
 use App\Models\News;
+use App\Models\Suscription;
 
 class AdminController extends Controller
 {
     public function showDashboard()
-    {
-        return view('admin.dashboard');
+{
+    $subscriptionsCount = Suscription::select('service_id', DB::raw('count(*) as count'))
+        ->groupBy('service_id')
+        ->orderByDesc('count')
+        ->get();
+
+    $mostSubscribedService = $subscriptionsCount->first();  // El más suscrito
+
+    $mostSubscribedServiceName = null;
+    if ($mostSubscribedService) {
+        $mostSubscribedServiceName = Service::find($mostSubscribedService->service_id)->name;
     }
+
+    $services = Service::whereIn('id', $subscriptionsCount->pluck('service_id'))->get();
+
+    return view('admin.dashboard', compact('subscriptionsCount', 'services', 'mostSubscribedServiceName'));
+}
 
     public function addUserForm(){
         return view('admin.addUserForm');
