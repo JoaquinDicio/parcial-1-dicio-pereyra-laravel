@@ -1,13 +1,19 @@
+
 @extends('layouts.users')
 
 @section('title', 'Dashboard')
 
 @section('content')
-<div class="container text-black py-20 px-10 min-h-screen">
+        @if(session('error'))
+            <div class="bg-red-500 text-white absolute bottom-0 w-full py-5 text-center">
+                {{ session('error') }}
+            </div>
+        @endif
+<div class="container text-black py-20 px-10 min-h-screen mx-auto">
     <h1 class="text-3xl font-semibold mb-8">Carrito</h1>
 
     @if(empty($groupedItems))
-        <div class="w-full min-h-screen flex items-center justify-center">
+        <div class="w-full flex items-center justify-center">
             <p class="text-xl font-medium">No hay productos en tu carrito</p>
         </div>
     @else
@@ -38,8 +44,27 @@
 
         <div class="mt-6 flex justify-between items-center">
             <h4 class="text-xl font-semibold">Total: {{ number_format($total, 2) }} ARS$</h4>
-            <a href="{{ route('cart.checkout') }}" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded-lg">Proceder al pago</a>
+            <div id="wallet_container"></div>
         </div>
+
+        <script>
+
+        const mp = new MercadoPago('TEST-708ec68b-3d6d-4253-91ec-793beaecf543');
+        const bricksBuilder = mp.bricks();
+
+        mp.bricks().create("wallet", "wallet_container", {
+        initialization: {
+            preferenceId: '{{$preference->id}}',
+        },
+        customization: {
+                texts: {
+                    action: "pay",
+                    valueProp: 'security_safety',
+                },
+            },
+        });
+        </script>
     @endif
 </div>
 @endsection
+

@@ -15,10 +15,10 @@ Route::delete('/cart/${id}', [CartController::class,'deleteFromCart'])
     ->middleware('auth')
     ->name('cart.remove');
 
-Route::post('/cart/checkout', [CartController::class,'checkout'])
-    ->middleware('auth')
-    ->name('cart.payment');
+Route::get('/cart/success', [CartController::class,'paymentSuccess'])
+->middleware('auth')
+->name('payment.success');
 
-Route::get('/cart/checkout', [CartController::class,'showCheckout'])
-    ->middleware('auth')
-    ->name('cart.checkout');
+Route::get('/cart/failed', [CartController::class,'paymentFailed'])
+->middleware('auth')
+->name('payment.failed');

@@ -1,8 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\CartItem;
+use MercadoPago\Client\Preference\PreferenceClient;
+use MercadoPago\MercadoPagoConfig;
 
 class CartController extends Controller
 {
@@ -14,6 +15,14 @@ class CartController extends Controller
         // eloquent usa del modelo Cart-> cartItems para saber que items devolver y hace uso de la relacion
         // con la tabla 'services' 
         $cartItems = $cart->cartItems()->with('service')->get();
+
+        if ($cartItems->isEmpty()) {
+            return view('users.cart', [
+                'groupedItems' => [],
+                'total' => 0,
+                'preference' => null,
+            ]);
+        }
 
         $groupedItems = [];
         foreach ($cartItems as $item) {
@@ -33,9 +42,77 @@ class CartController extends Controller
         $total = array_sum(array_column($groupedItems, 'total_price'));
         session(['cart_total'=>$total]); //lo guardo global para poder usarlo en el checkout
 
-        return view('users.cart', compact('groupedItems', 'total'));
-    }
+        //integracion con mercado pago
 
+        MercadoPagoConfig::setAccessToken(env('MERCADO_PAGO_ACCESS_KEY'));
+
+        $client = new PreferenceClient();
+
+        try {
+            $itemsArray = [];
+        
+            foreach ($cartItems as $item) {
+                $itemsArray[] = [
+                    "id" => $item->id,
+                    "title" => $item->service->name,
+                    "quantity" => 1,
+                    "unit_price" => intval($item->service->price),
+                ];
+            }
+        
+            $preference = $client->create([
+                "items" => $itemsArray,
+                "statement_descriptor" => "HostEngine",
+                "external_reference" => "CDP001",
+                "back_urls" => [
+                    "success" => route('payment.success'), // cuando el pago es exitoso
+                    "failure" => route('payment.failed'), // cuando no se pudo completar el pago
+                ],
+                "auto_return" => "approved",
+            ]);
+        
+            if (!$preference) {
+                throw new \Exception("No se pudo crear la preferencia de Mercado Pago");
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 500);
+        }
+        
+
+        return view('users.cart', compact('groupedItems','total', 'preference'));
+    }
+    public function paymentFailed(Request $request)
+    {
+        return redirect()->route('cart')->with('error', value: 'No se pudo procesar el pago, intentalo nuevamente.');
+    }
+    public function paymentSuccess(Request $request)
+    {
+       //consulta para obtener los items del cart
+       $user = auth()->user();
+       $cartId = auth()->user()->cart->id;
+       $cartItems = CartItem::where('cart_id', $cartId)->get();
+
+       //suscripcion y pago para cada item del cart
+
+       foreach ($cartItems as $item){
+           
+           $subscription = $user->subscriptions()->create([
+               'service_id' => $item->service_id,
+               'contract_date' => now(),
+           ]);
+
+           $subscription->payments()->create([
+               'amount' => session('cart_total'),
+               'card_last_four' => substr($request->card_number, -4), 
+               'payment_date' => now(),
+           ]);
+       }
+
+       $user->cart->cartItems()->delete();
+    
+        // redirigir a la página de inicio con mensaje de éxito
+        return redirect()->route('users.home')->with('success', 'Tu pago fue exitoso, ya estás suscrito a los servicios seleccionados.');
+    }
     public function addToCart(Request $request)
     {
         $user = $request->user();
@@ -46,7 +123,6 @@ class CartController extends Controller
 
         return back()->with('success', 'Servicio agregado al carrito correctamente.');
     }
-
     public function deleteFromCart($cart_item_id)
     {
         $item = CartItem::find($cart_item_id);
@@ -56,61 +132,4 @@ class CartController extends Controller
             return back()->with('success','Servicio eliminado del carrito');
         };
     }
-
-    public function showCheckout(){
-        return view('users.checkout');
-    }
-
-    public function checkout(Request $request){
-
-        $messages = [
-            'card_number.required' => 'El numero de la tarjeta es obligatorio.',
-            'card_number.numeric' => 'Este numero es invalido',
-            'card_number.digits' => 'El numero de tarjeta debe tener 16 digitos.',
-            'expiry_date.required' => 'La fecha de vencimiento es obligatoria.',
-            'expiry_date.date_format' => 'El formato de la fecha debe ser MM/AA.',
-            'cvv.required' => 'El CVV es obligatorio.',
-            'cvv.numeric' => 'El CVV debe ser un numero.',
-            'cvv.digits' => 'El CVV debe tener 3 digitos.',
-        ];
-    
-        $request->validate([
-            'card_number' => 'required|numeric|digits:16',
-            'expiry_date' => ['required', 'date_format:m/y', function ($attribute, $value, $fail) {
-                // esta funcion es para ver que no haya expirado la tarjetita
-                $currentDate = new \DateTime();
-                $expiryDate = \DateTime::createFromFormat('m/y', $value);
-                if ($expiryDate < $currentDate) {
-                    $fail('Tu tarjeta esta vencida');
-                }
-            }],
-            'cvv' => 'required|numeric|digits:3',
-        ], $messages);
-        
-        //consulta para obtener los items del cart
-        $user = auth()->user();
-        $cartId = auth()->user()->cart->id;
-        $cartItems = CartItem::where('cart_id', $cartId)->get();
-
-        //suscripcion y pago para cada item del cart
-        foreach ($cartItems as $item){
-            
-            $subscription = $user->subscriptions()->create([
-                'service_id' => $item->service_id,
-                'contract_date' => now(),
-            ]);
-
-            $subscription->payments()->create([
-                'amount' => session('cart_total'),
-                'card_last_four' => substr($request->card_number, -4), 
-                'payment_date' => now(),
-            ]);
-        }
-
-        $user->cart->cartItems()->delete();
-
-        return redirect()->route('users.dashboard')->with('success','Tu pago fue exitoso, ya estas suscrito');
-    }
-
 }
-
