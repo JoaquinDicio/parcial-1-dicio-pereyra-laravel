@@ -11,19 +11,27 @@
             </div>
         @endif
         @if(session('error'))
-            <div class="bg-red-500 text-white p-4 mb-4 rounded">
+            <div class="bg-red-500 text-white p-4 mb-4 rounded text-center">
                 {{ session('error') }}
             </div>
         @endif
         <!-- FIN: ERRORES Y SUCCESS -->
 
-        <div class="container mx-auto flex flex-col lg:flex-row items-center max-w-[1100px]">
-            <div class="lg:w-1/2 p-6">
-                <h1 class="text-4xl font-bold text-gray-800 mb-4">Bienvenido, {{ Auth::user()->name }}</h1>
-                <p class="text-gray-600 text-lg">
-                    Aca podes ver los servicios a los que estás suscripto.
-                </p>
+       
+        <div class="container mx-auto flex flex-col lg:flex-row justify-between items-center max-w-[1100px]">
+            <div class="lg:w-1/2 p-6 flex justify-between">
+                <div>
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Bienvenido, {{ Auth::user()->name }}</h1>
+                    <p class="text-gray-600 text-lg">
+                        Aca podes ver los servicios a los que estás suscripto.
+                    </p>
+                </div>
             </div>
+            <a href="{{ route('user.edit') }}" 
+                class="bg-blue-600 text-white rounded-lg py-2 px-4 hover:bg-blue-700 transition duration-200">
+                Editar mis datos
+            </a>
+
         </div>
     </section>
 

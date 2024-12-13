@@ -104,7 +104,7 @@ class userController extends Controller
             return back()->withErrors(['error' => 'Ocurrió un error inesperado.'])->withInput();
         }
     }
-    
+  
     public function addSuscription(Request $request)
     {
         $request->validate([
@@ -146,6 +146,27 @@ class userController extends Controller
         }
 
         return redirect()->route('users')->with('error', 'Usuario no encontrado.');
+    }
+    public function edit()
+    {
+        $user = Auth::user();
+        return view('users.edit', compact('user'));
+    }
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
+
+        return redirect()->route('users.home')->with('success', 'Datos actualizados correctamente.');
     }
 }
 
