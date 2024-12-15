@@ -14,6 +14,13 @@ Este proyecto es una aplicación web que permite gestionar servicios y noticias,
     - **Usuario Común**
       - Email: usuarioComun@gmail.com
       - Contraseña: 123456
+      - Datos de la tarjeta:     
+            Mastercard
+            5031 7557 3453 0604
+            123
+            11/25
+            Nombre del titular: APRO (para una transaccion exitosa).
+            si deseas verificar que sucede si no ocurre una transaccion exitosa podes poner cualquier otra cosa.
   - Autenticación que valida la existencia del usuario y las credenciales de acceso.
 
 - **Gestión de Servicios**:
