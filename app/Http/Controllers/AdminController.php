@@ -8,28 +8,23 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Service;
 use App\Models\News;
-use App\Models\Suscription;
-
+use App\Services\DashboardService;
 class AdminController extends Controller
 {
-    public function showDashboard()
-{
-    $subscriptionsCount = Suscription::select('service_id', DB::raw('count(*) as count'))
-        ->groupBy('service_id')
-        ->orderByDesc('count')
-        ->get();
+    protected $dashboardService;
 
-    $mostSubscribedService = $subscriptionsCount->first();  // El más suscrito
-
-    $mostSubscribedServiceName = null;
-    if ($mostSubscribedService) {
-        $mostSubscribedServiceName = Service::find($mostSubscribedService->service_id)->name;
+    public function __construct(DashboardService $dashboardService)
+    {
+        $this->dashboardService = $dashboardService;
     }
 
-    $services = Service::whereIn('id', $subscriptionsCount->pluck('service_id'))->get();
+    public function showDashboard()
+    {
+        $data = $this->dashboardService->getDashboardData();
 
-    return view('admin.dashboard', compact('subscriptionsCount', 'services', 'mostSubscribedServiceName'));
-}
+        return view('admin.dashboard', $data);
+    }
+    
 
     public function addUserForm(){
         return view('admin.addUserForm');

@@ -17,7 +17,6 @@
         @endif
         <!-- FIN: ERRORES Y SUCCESS -->
 
-       
         <div class="container mx-auto flex flex-col lg:flex-row justify-between items-center max-w-[1100px]">
             <div class="lg:w-1/2 p-6 flex justify-between">
                 <div>
@@ -35,7 +34,7 @@
         </div>
     </section>
 
-    <!-- Listado de suscripciones activas -->
+    <!-- LISTADO DE SUSCRIPCIONES ACTIVAS -->
     <section class="px-5 pb-10 min-h-[90vh] bg-slate-100">
         <div class="container mx-auto text-center">
             @if(count($subscriptions) > 0)
@@ -50,7 +49,7 @@
                                 <span class="text-sm text-gray-600">/mes</span>
                             </div>
                         </div>
-                        <form class="mb-5" action="{{ route('unsubscribe', $subscription->service_id) }}" method="POST" class="w-full">
+                        <form class="mb-5" action="{{ route('unsubscribe', $subscription->service_id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-white rounded-lg py-4 border font-semibold font-xl bg-red-600 px-4 hover:bg-red-700  w-full transition ease-in-out duration-200">Desuscribirse</button>
