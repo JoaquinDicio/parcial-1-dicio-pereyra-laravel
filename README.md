@@ -20,6 +20,7 @@ Este proyecto es una aplicación web que permite gestionar servicios y noticias,
       - 123
       - 11/25
       - Nombre del titular: APRO (para una transaccion exitosa).
+      - DNI: 12345678
       - si deseas verificar que sucede si no ocurre una transaccion exitosa podes poner cualquier otra cosa.
 
 
